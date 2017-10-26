@@ -10,8 +10,6 @@ class User extends AuthenticatableModel
 {
     use Notifiable, SoftDeletes;
 
-    protected $show = true;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -51,7 +49,8 @@ class User extends AuthenticatableModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function products(){
+    public function products()
+    {
         return $this->hasMany('Code\UserProduct\Model\UserProduct', 'user_id');
     }
 }

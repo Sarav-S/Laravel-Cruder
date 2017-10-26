@@ -2,7 +2,12 @@
     "name": "sarav/laravel-cruder",
     "description": "A Simple Laravel Package to build module based development",
     "type": "Library",
-    "keywords" : ["laravel", "crud", "admin", "multiauth"],
+    "keywords": [
+        "laravel",
+        "crud",
+        "admin",
+        "multiauth"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sarav\\" : "src"
+            "Sarav\\": "src"
         }
     },
     "extra": {

@@ -67,7 +67,7 @@ class CoreServiceProvider extends ServiceProvider
 
     protected function registerThirdPartyAliases()
     {
-        $this->app->booting(function() {
+        $this->app->booting(function () {
             $loader = AliasLoader::getInstance();
             $loader->alias('Breadcrumbs', 'DaveJamesMiller\Breadcrumbs\Facade');
             $loader->alias('Form', 'Collective\Html\FormFacade');
@@ -81,8 +81,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function registerBreadcrumbs()
     {
-        if (file_exists($file = realpath(__DIR__.'/../breadcrumbs/links.php')))
-        {
+        if (file_exists($file = realpath(__DIR__.'/../breadcrumbs/links.php'))) {
             require $file;
         }
     }

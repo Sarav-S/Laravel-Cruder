@@ -118,7 +118,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Facebook Client ID',
             'slug'          => 'facebook_client_id',
-            'value'         => '724197067760899',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''
@@ -128,7 +128,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Facebook Client Secret',
             'slug'          => 'facebook_client_secret',
-            'value'         => '0cead261b59e02055d21773daab42f10',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''
@@ -148,7 +148,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Google Plus Client ID',
             'slug'          => 'google_client_id',
-            'value'         => '585484113519-lefqaj0odgkofv26d28rlsnuroeg059i.apps.googleusercontent.com',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''
@@ -158,7 +158,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Google Plus Client Secret',
             'slug'          => 'google_client_secret',
-            'value'         => 'E9QyykYjY3fUnPN9QJTCN1Z-',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''
@@ -178,7 +178,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Twitter Client ID',
             'slug'          => 'twitter_client_id',
-            'value'         => 'kINGLui0JRk8zUOC2eMdyeR6D',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''
@@ -188,7 +188,7 @@ class SettingSeeder extends Seeder
             'heading'       => '3. Social Login',
             'label'         => 'Twitter Secret',
             'slug'          => 'twitter_client_secret',
-            'value'         => 'q3K2J9LJNBScugJQvx8a1lORtjV0wrSbrl7CnmAlZTArHRlwu1',
+            'value'         => '',
             'required'      => 0,
             'input_type'    => 'text',
             'input_options' => ''

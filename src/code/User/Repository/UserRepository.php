@@ -11,10 +11,10 @@ class UserRepository extends BaseRepository
 {
     use JsonResponseTrait;
 
-	public function assignModel()
-	{
-		return User::class;
-	}
+    public function assignModel()
+    {
+        return User::class;
+    }
 
     public function setFallBack()
     {
@@ -26,27 +26,29 @@ class UserRepository extends BaseRepository
         return "Users";
     }
 
-	/**
-	 * Saves the user record
-	 *
-	 * @param      integer  $id     The identifier
-	 *
-	 * @return     \Illuminate\Http\RedirectResponse
-	 */
-	public function beforeSave($record)
-	{
-		$record->name  = request('name');
-		$record->email = request('email');
+    /**
+     * Saves the user record
+     *
+     * @param      integer  $id     The identifier
+     *
+     * @return     \Illuminate\Http\RedirectResponse
+     */
+    public function beforeSave($record)
+    {
+        $record->name  = request('name');
+        $record->email = request('email');
 
-		if (request()->has('password')) {
-			$record->password = request('password');
-		}
+        if (request()->has('password')) {
+            $record->password = request('password');
+        }
 
-		return $record;
-	}
+        return $record;
+    }
 
-	public function afterSave($record)
-	{ 
-		$record->image = request()->file('image')->store('users/'.$record->id.'/profile/');
-	}
+    public function afterSave($record)
+    {
+        if (request()->hasFile('image')) {
+            $record->image = request()->file('image')->store('users/'.$record->id.'/profile/');
+        }
+    }
 }
