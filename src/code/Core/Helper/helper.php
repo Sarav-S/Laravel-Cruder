@@ -5,9 +5,8 @@
  *
  * @return     mixed  \Code\Admin\Model\Admin instance | AdminNotLoggedInException
  */
-function admin() 
+function admin()
 {
-
     if (!auth()->guard('admin')->check()) {
         throw \AdminNotLoggedInException;
     }
@@ -21,9 +20,8 @@ function admin()
  *
  * @return     mixed  \Code\User\Model\User instance | UserNotLoggedInException
  */
-function user() 
+function user()
 {
-
     if (!auth()->check()) {
         throw \UserNotLoggedInException;
     }
@@ -104,7 +102,7 @@ function reduce($session, $class)
     }
 
     $html = "<ul class='$class'>";
-    foreach($session as $item) {
+    foreach ($session as $item) {
         $html .= "<li>$item</li>";
     }
     $html .= "</ul>";
@@ -116,7 +114,7 @@ function renderField($record, $column)
 {
     $type = isset($column['type']) ? $column['type'] : null;
 
-    switch($type) {
+    switch ($type) {
         case 'date':
             return $record->{$column['index']}->format(dateFormat());
             break;
@@ -125,7 +123,7 @@ function renderField($record, $column)
             return '<a href="'.asset($record->{$column['index']}).'" target="_blank"><img src="'.asset($record->{$column['index']}).'" width="50px"/></a>';
             break;
 
-        default : 
+        default:
             return $record->{$column['index']};
     }
 }
@@ -144,9 +142,9 @@ if (!function_exists('renderFormField')) {
      *
      * @return     string
      */
-    function renderFormField($fields) : string{
-
-        return collect($fields)->reduce(function($initial, $value) {
+    function renderFormField($fields) : string
+    {
+        return collect($fields)->reduce(function ($initial, $value) {
             return $initial .= '<div class="form-group">'.
                             checkFieldAndAdd($value).
                         '</div>';
@@ -162,8 +160,8 @@ if (!function_exists('checkFieldAndAdd')) {
      *
      * @return string
      */
-    function checkFieldAndAdd($value) : string {
-
+    function checkFieldAndAdd($value) : string
+    {
         $html = '';
         $params = ['id' => $value->slug, 'class' => 'form-control'];
 
@@ -171,24 +169,24 @@ if (!function_exists('checkFieldAndAdd')) {
             $params['required'] = 'required';
         }
 
-        switch($value->input_type) {
-            case "text" :
+        switch ($value->input_type) {
+            case "text":
                 $html .= Form::label($value->label);
                 $html .= Form::text($value->slug, setting($value->slug), $params);
                 break;
 
-            case "textarea" :
+            case "textarea":
                 $html .= Form::label($value->label);
                 $html .= Form::textarea($value->slug, setting($value->slug), $params);
                 break;
 
-            case "checkbox" :
+            case "checkbox":
                 $selected = (setting($value->slug)) ? true : false;
                 $html .= Form::checkbox($value->slug, 1, $selected, ['id' => $value->slug]);
                 $html .= '&nbsp;'.Form::label($value->slug, $value->label);
                 break;
 
-            case "file" :
+            case "file":
                 $html .= Form::label($value->label);
                 $html .= ($value->value) ? '<img src="'.asset('storage/'.$value->value).'" width="30px">' : '';
                 $html .= Form::file($value->slug);
@@ -211,8 +209,9 @@ if (!function_exists('setting')) {
      *
      * @return  string
      */
-    function setting(string $item) :string {
-        $settings = collect(getAllSettings())->filter(function($value, $key) use ($item) {
+    function setting(string $item) :string
+    {
+        $settings = collect(getAllSettings())->filter(function ($value, $key) use ($item) {
             return $value->slug === $item;
         })->pluck('value')->first();
 
@@ -226,8 +225,8 @@ if (!function_exists('getAllSettings')) {
      *
      * @return array  All settings.
      */
-    function getAllSettings($flag = false) :array {
-
+    function getAllSettings($flag = false) :array
+    {
         return collect(getSettingsFromTable())->toArray();
     }
 }
@@ -238,8 +237,8 @@ if (!function_exists('getSettingsFromTable')) {
      *
      * @return array  The settings from table.
      */
-    function getSettingsFromTable() : array {
-
+    function getSettingsFromTable() : array
+    {
         if (empty(DB::select(DB::raw('SHOW tables like "settings"')))) {
             return [];
         }
@@ -280,7 +279,7 @@ if (!function_exists('renderDynamicFields')) {
      */
     function renderDynamicFields($fields, $record = null)
     {
-        return collect($fields)->reduce(function($initial, $value) use ($record) {
+        return collect($fields)->reduce(function ($initial, $value) use ($record) {
             return $initial .= '<div class="form-group">'.
                             addDynamicFields($value, $record).
                         '</div>';
@@ -289,45 +288,72 @@ if (!function_exists('renderDynamicFields')) {
 }
 
 if (!function_exists('addDynamicFields')) {
-
     function addDynamicFields($field, $record)
     {
         $html = '';
         $params = ['id' => $field['column'], 'class' => 'form-control'];
 
+        if (isset($field['class'])) {
+            $params['class'] = $field['class'].' form-control';
+        }
+
         if ($field['required']) {
             $params['required'] = 'required';
-        }  
+        }
+
+        if (isset($field['placeholder'])) {
+            $params['placeholder'] = $field['placeholder'];
+        }
 
         $value = $record->{$field['column']} ?? $field['value'];
 
-        switch($field['input']) {
-            case "text" :
+        $params = (isset($field['attr'])) ? array_merge($params, $field['attr']) : $params;
+
+        switch ($field['input']) {
+            case "text":
                 $html .= Form::label($field['label']);
                 $html .= Form::text($field['column'], $value, $params);
                 $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
                 break;
 
-            case "textarea" :
+            case "email":
+                $html .= Form::label($field['label']);
+                $html .= Form::input('email', $field['column'], $value, $params);
+                $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
+                break;
+
+            case "password":
+                $html .= Form::label($field['label']);
+                $html .= Form::input('password', $field['column'], null, $params);
+                $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
+                break;
+
+            case "textarea":
                 $html .= Form::label($field['label']);
                 $html .= Form::textarea($field['column'], $value, $params);
                 $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
                 break;
 
-            case "checkbox" :
+            case "checkbox":
                 $selected = ($field['value']) ? true : false;
                 $html .= Form::checkbox($field['column'], 1, $selected, ['id' => $field['column']]);
                 $html .= '&nbsp;'.Form::label($field['column'], $field['label']);
                 $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
                 break;
 
-            case "file" :
+            case "file":
+                if (imageExists(asset('storage/'.$value))) {
+                    $html .= '<a href="'.asset($value).'" target="_blank" class="block">
+                                <img src="'.asset($value).'" alt="'.$value.'" width="50px">
+                            </a>';
+                }
+                
                 $html .= Form::label($field['label']);
                 $html .= Form::file($field['column']);
                 $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
                 break;
 
-            case "select" :
+            case "select":
                 $html .= Form::label($field['label']);
                 $html .= Form::select($field['column'], $field['option'], $value, $params);
                 $html .= '<p class="help-block">'.$field['helpBlock'].'</p>';
@@ -341,3 +367,22 @@ if (!function_exists('addDynamicFields')) {
     }
 }
 
+function getOptions()
+{
+    return [
+        '1' => 'Active',
+        '0' => 'Inactive'
+    ];
+}
+
+/**
+ * Checks if image exists in given path
+ *
+ * @param      string  $url    The url
+ *
+ * @return     boolean
+ */
+function imageExists($url)
+{
+    return (@getimagesize($url)) ? true : false;
+}

@@ -272,6 +272,8 @@
 									<td>
 										<select name="inputs[]" id="inputs" class="form-control">
 											<option value="text">Text</option>
+											<option value="email">Email</option>
+											<option value="password">Password</option>
 											<option value="textarea">Textarea</option>
 											<option value="file">File</option>
 											<option value="select">Select</option>
