@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 abstract class BaseRepository extends Repository
 {
 
-	/**
+    /**
      * @param App $app
      * @param Collection $collection
      * @throws \Bosnadev\Repositories\Exceptions\RepositoryException
@@ -29,7 +29,7 @@ abstract class BaseRepository extends Repository
 
     /**
      * Returns the fallback url. This is used when user performs
-     * create, edit or delete action we will redirect him back to 
+     * create, edit or delete action we will redirect him back to
      * this url
      *
      * @return  String
@@ -39,14 +39,14 @@ abstract class BaseRepository extends Repository
         return $this->setFallBack();
     }
 
-	/**
+    /**
      * Specify Model class name
      *
      * @return mixed
      */
     public function model()
     {
-    	return $this->assignModel();
+        return $this->assignModel();
     }
 
     /**
@@ -67,12 +67,14 @@ abstract class BaseRepository extends Repository
     {
         View::share('model', $this->model);
 
-        if ($this->skipCriteria === true)
+        if ($this->skipCriteria === true) {
             return $this;
+        }
 
         foreach ($this->getCriteria() as $criteria) {
-            if ($criteria instanceof Criteria)
+            if ($criteria instanceof Criteria) {
                 $this->model = $criteria->apply($this->model, $this);
+            }
         }
 
         return $this;
@@ -95,12 +97,17 @@ abstract class BaseRepository extends Repository
 
         $record = $this->beforeSave($record);
 
-        if ($record->save()) {
-            $this->afterSave($record);
-            $record->save();
-            success(str_singular($this->module()).' saved successfully.');
-        } else {
-            error('Unable to save '.str_singular($this->module()).'. Please try again');
+        try {
+            if ($record->save()) {
+                $this->afterSave($record);
+                $record->save();
+                success(str_singular($this->module()).' saved successfully.');
+            } else {
+                error('Unable to save '.str_singular($this->module()).'. Please try again');
+            }
+        } catch (\Exception $e) {
+            logger($e);
+            error('Sorry. Something went wrong. Please check your log file');
         }
 
         return redirect($this->getFallBack());
@@ -130,21 +137,24 @@ abstract class BaseRepository extends Repository
 
         $id = $record->id;
 
-        if ($record->delete()) {
-
-            $this->afterDelete($id);
-
-            success(str_singular($this->module()).' deleted successfully.');
-        } else {
-            error('Unable to delete '.str_singular($this->module()).'. Please try again');
+        try {
+            if ($record->delete()) {
+                $this->afterDelete($id);
+                success(str_singular($this->module()).' deleted successfully.');
+            } else {
+                error('Unable to delete '.str_singular($this->module()).'. Please try again');
+            }
+        } catch (\Exception $e) {
+            error("Sorry. Something went wrong. Please check your log file");
         }
+
 
         return redirect($this->getFallBack());
     }
 
     /**
-     * This finds and creates new instance for the given id. But 
-     * know that, this is different from findOrNew. Because if given 
+     * This finds and creates new instance for the given id. But
+     * know that, this is different from findOrNew. Because if given
      * id is not found we are gonna throw record not found message
      *
      * @param      integer|mixed  $id     The identifier
@@ -169,22 +179,21 @@ abstract class BaseRepository extends Repository
      *
      * @return     \Illuminate\Database\Eloquent\Model
      */
-    protected function beforeSave($record) 
+    protected function beforeSave($record)
     {
-        return $record;    
+        return $record;
     }
 
     /**
      * Handles the after save functionality like saving
      * image of the record after saving the record itself
-     * so that user might get id of the recently saved 
+     * so that user might get id of the recently saved
      * record
      *
      * @param   mixed
      */
     protected function afterSave($record)
     {
-
     }
 
     /**
@@ -195,7 +204,6 @@ abstract class BaseRepository extends Repository
      */
     protected function beforeDelete($record)
     {
-
     }
 
     /**
@@ -206,7 +214,6 @@ abstract class BaseRepository extends Repository
      */
     protected function afterDelete($record)
     {
-
     }
 
     /**
