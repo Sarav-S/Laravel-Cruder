@@ -1,0 +1,17 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit DummyNameSingular')
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render("admin.DummyNamePlural.edit") !!}
+@endsection
+
+@section('content')
+	{!! Form::model($record, [
+		'url' => route('admin.DummyNamePlural.update', $record->id), 
+		'method' => 'PUT', 
+		'class' => 'validate',
+		'files' => true]) !!}
+		@include('DummyNamePlural.admin._form')
+	{!! Form::close() !!}
+@endsection

@@ -1,0 +1,36 @@
+<?php 
+
+namespace Code\DummyName\Http\Controllers\Admin;
+
+use Code\Core\Http\Controllers\AdminCoreController;
+use Code\DummyName\Repository\DummyNameRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+
+class DummyNameController extends AdminCoreController
+{
+
+	public function __construct(DummyNameRepository $repo)
+	{
+		$this->repo   = $repo;
+		$this->view   = "DummyPlural";
+		$this->module = "DummyName";
+		parent::__construct();
+		View::share('route', 'admin.DummyPlural.');
+	}
+
+	public function rules()
+	{
+		$rules = [
+			DummyRulesCreate
+		];
+
+		$id = urlsegmentDecode();
+
+		if ($id && is_numeric($id)) {
+			DummyRulesUpdate
+		}
+
+		return $rules;
+	}
+}

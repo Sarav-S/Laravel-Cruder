@@ -1,0 +1,7 @@
+<?php $record = ($record) ?? null; ?>
+
+{!! renderDynamicFields($model->fields(), $record) !!}
+
+<div class="form-group">
+	{!! Form::submit('Save Changes', ['class' => 'btn btn-success']) !!}
+</div>

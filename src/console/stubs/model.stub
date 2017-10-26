@@ -1,0 +1,24 @@
+<?php 
+
+namespace Code\DummyName\Model;
+
+use Code\Core\Model\Model;
+use Illuminate\Cache\TaggableStore;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cache;
+FieldNamespace
+RelationshipNamespace
+class DummyName extends Model
+{
+	useFieldTrait
+    protected $fillable = [
+        DummyFillable
+    ];
+
+    DummyTimestamps
+
+    public $columns = [
+        DummyListing
+    ];
+    DummyRelationships
+}

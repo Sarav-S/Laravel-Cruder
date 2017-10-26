@@ -1,0 +1,23 @@
+<?php
+
+Breadcrumbs::register('DummyIndex', function($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('DummyModule Listing', route('DummyIndex'));
+});
+
+Breadcrumbs::register('DummyCreate', function($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Create DummyModule', route('DummyCreate'));
+});
+
+Breadcrumbs::register('DummyShow', function($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $segment = urlsegment();
+    $breadcrumbs->push('View DummyModule', route('DummyShow', $segment));
+});
+
+Breadcrumbs::register('DummyEdit', function($breadcrumbs) {
+    $breadcrumbs->parent('admin');
+    $segment = urlsegment();
+    $breadcrumbs->push('Edit DummyModule', route('DummyEdit', $segment));
+});

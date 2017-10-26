@@ -1,0 +1,47 @@
+<?php
+
+namespace Code\DummyName\Repository;
+
+use Carbon\Carbon;
+use Code\DummyName\Model\DummyName;
+use Code\Core\Repository\BaseRepository;
+
+class DummyNameRepository extends BaseRepository
+{
+
+	public function assignModel()
+	{
+		return DummyName::class;
+	}
+
+    public function setFallBack()
+    {
+        return route('admin.DummyPluralSmall.index');
+    }
+
+    public function module()
+    {
+        return "DummyPlural";
+    }
+
+	/**
+	 * Saves the user record
+	 *
+	 * @param      integer  $id     The identifier
+	 *
+	 * @return     \Illuminate\Http\RedirectResponse
+	 */
+	public function beforeSave($record)
+	{
+		/**
+		 * Your Logic
+		 */
+
+		return $record;
+	}
+
+	public function afterSave($record)
+	{ 
+		
+	}
+}

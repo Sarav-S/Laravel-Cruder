@@ -1,0 +1,35 @@
+{
+    "name": "sarav/laravel-cruder",
+    "description": "A Simple Laravel Package to build module based development",
+    "type": "Library",
+    "keywords" : ["laravel", "crud", "admin", "multiauth"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sarav",
+            "email": "me@sarav.co",
+            "homepage": "https://sarav.co",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.0",
+        "bosnadev/repositories": " 0.*",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+        "laravel/socialite": "^3.0",
+        "laravelcollective/html": "^5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sarav\\" : "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sarav\\Providers\\CruderServiceProvider"
+            ]
+        }
+    }
+}

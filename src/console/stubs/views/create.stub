@@ -1,0 +1,18 @@
+@extends('layouts.admin')
+
+@section('title', 'Add DummyNameSingular')
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render("admin.DummyNamePlural.create") !!}
+@endsection
+
+@section('content')
+	{!! Form::open([
+		'url' => route('admin.DummyNamePlural.store'), 
+		'method' => 'POST', 
+		'class' => 'validate',
+		'files' => true
+	]) !!}
+		@include('DummyNamePlural.admin._form')
+	{!! Form::close() !!}
+@endsection

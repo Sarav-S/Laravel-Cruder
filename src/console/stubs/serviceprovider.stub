@@ -1,0 +1,43 @@
+<?php
+
+namespace Code\DummyName\Providers;
+
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+class DummyNameServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerBreadcrumbs();
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+    }
+
+    /**
+     * Register's application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->register('Code\DummyName\Providers\RouteServiceProvider');
+
+        View::addLocation(realpath(__DIR__.'/../resources/views'));
+    }
+
+    /**
+     * Registers the admin breadcrumbs
+     */
+    public function registerBreadcrumbs()
+    {
+        if (file_exists($file = realpath(__DIR__.'/../breadcrumbs/links.php')))
+        {
+            require $file;
+        }
+    }
+}

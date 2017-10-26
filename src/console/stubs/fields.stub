@@ -1,0 +1,13 @@
+<?php 
+
+DummyNamespace;
+
+trait Fields
+{
+	public function fields()
+	{
+		return [
+			DummyFields
+		];
+	}
+}
