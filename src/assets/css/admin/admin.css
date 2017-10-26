@@ -8,6 +8,12 @@ html,body {
     background-color: #fafafa!important;
 }
 
+span.gradient {
+    display: block;
+    height: 9px;
+    background: linear-gradient(to right, rgb(52, 143, 80), rgb(86, 180, 211));
+}
+
 .container {
 	max-width: 1080px;
 }
@@ -16,10 +22,27 @@ html,body {
     display: block;
 }
 
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:focus, 
+.navbar-default .navbar-nav > .active > a:hover {
+    color: #02b875 !important;
+    background-color: #fff;
+}
+
+.navbar-nav > li.active::after {
+    content: "";
+    height: 3px;
+    display: block;
+    background: linear-gradient(to right, rgb(52, 143, 80), rgb(86, 180, 211));
+    border-radius: 5px;
+    margin-bottom: -1px;
+}
+
 .navbar-default .navbar-nav>li>a {
     color: rgba(0,0,0,.6) !important;
     font-weight: 400;
     padding: 15px;
+    outline: none !important;
 }
 
 .dropdown-menu > li > a {

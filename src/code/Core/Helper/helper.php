@@ -386,3 +386,26 @@ function imageExists($url)
 {
     return (@getimagesize($url)) ? true : false;
 }
+
+/**
+ * checks if current menu is active or not
+ *
+ * @param  string  $route
+ * @return string
+ */
+function isActive($route)
+{
+    if (!is_array($route)) {
+        $route = [$route];
+    }
+
+    $routeName = \Route::currentRouteName();
+
+    foreach ($route as $r) {
+        if (stripos($routeName, $r) !== false) {
+            return "active";
+        }
+    }
+
+    return "";
+}

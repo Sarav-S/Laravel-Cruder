@@ -12,6 +12,7 @@
 </head>
 <body>
 	<header>
+		<span class="gradient"></span>
 		<div class="container">
 			<h1 class="main-logo">
 				<a href="{{ url(config('admin.url')) }}">
@@ -42,14 +43,34 @@
 			        <!-- Collect the nav links, forms, and other content for toggling -->
 			        <div class="collapse navbar-collapse" id="my-navigation">
 			            <ul class="nav navbar-nav navbar-left">
-					        <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-					        <li><a href="{{ route('admin.admins.index') }}">Admins</a></li>
-			               	<li><a href="{{ route('admin.users.index') }}">Users</a></li>
-					        <li><a href="{{ route('admin.roles.index') }}">Roles</a></li>
-					        <li><a href="{{ route('admin.settings.get') }}">Settings</a></li>
+					        <li class="{{ isActive('admin.dashboard') }}">
+					        	<a href="{{ route('admin.dashboard') }}">Dashboard</a>
+					        </li>
+					        <li class="dropdown {{ isActive([
+					        		'admin.admins.index', 'admin.users.index', 'admin.roles.index'
+					        	]) }}">
+					        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					        		Manage Users
+					        		<i class="ion-ios-arrow-down"></i>
+					        	</a>
+					        	<ul class="dropdown-menu">
+						            <li>
+						            	<a href="{{ route('admin.admins.index') }}">Manage Admins</a>
+						            </li>
+						            <li>
+						            	<a href="{{ route('admin.users.index') }}">Manage Users</a>
+						            </li>
+						            <li><a href="{{ route('admin.roles.index') }}">Roles</a></li>
+						         </ul>
+					        </li>
+					        <li class="{{ isActive('admin.settings.get') }}">
+					        	<a href="{{ route('admin.settings.get') }}">Settings</a>
+					        </li>
 			            </ul>
 			            <ul class="nav navbar-nav navbar-right">
-			            	<li><a href="{{ route('admin.profile') }}">Profile</a></li>
+			            	<li class="{{ isActive('admin.profile') }}">
+								<a href="{{ route('admin.profile') }}">Profile</a>
+							</li>
 					        <li>
 					        	<form action="{{ route('admin.logout') }}" method="POST" class="logout-form">
 									{{ csrf_field() }}
