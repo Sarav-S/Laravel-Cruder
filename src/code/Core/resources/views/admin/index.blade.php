@@ -3,6 +3,9 @@
 @section('title', $module.' Management')
 
 @section('content')
+
+	@include('partials.notifications')
+
 	@if ($model->canAdd())
 		@include('admin.add', [
 			'url' => route($route.'create')
