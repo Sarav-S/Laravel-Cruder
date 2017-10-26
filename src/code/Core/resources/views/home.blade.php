@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Himate - Home')
+@section('title', 'Home')
 
 @section('body-class', 'home')
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Himate - Forgot Password')
+@section('title', 'Forgot Password')
 
 @section('content')
 <div class="page-wrapper">
