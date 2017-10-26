@@ -1,3 +1,5 @@
+@include('partials.errors')
+
 <?php $record = ($record) ?? null; ?>
 
 {!! renderDynamicFields($model->fields(), $record) !!}
