@@ -25,7 +25,6 @@
 					{!! session('success') !!}
 				</p>
 			@endif
-			
 			<div class="module-wrapper">
 				<div class="form-group">
 					<label for="module_name">Module Name</label>
@@ -110,7 +109,7 @@
 									</td>
 									<td>
 										<select name="datatype[]" class="form-control">
-											<option value="increments">INCREMENTS</option>
+											<!-- <option value="increments">INCREMENTS</option> -->
 											<option value="tinyInteger">TINYINT</option>
 											<option value="smallInteger">SMALLINIT</option>
 											<option value="mediumInteger">MEDIUMINT</option>
