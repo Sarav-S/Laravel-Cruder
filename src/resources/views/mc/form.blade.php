@@ -109,7 +109,7 @@
 									</td>
 									<td>
 										<select name="datatype[]" class="form-control">
-											<!-- <option value="increments">INCREMENTS</option> -->
+											{{-- <option value="increments">INCREMENTS</option> --}}
 											<option value="tinyInteger">TINYINT</option>
 											<option value="smallInteger">SMALLINIT</option>
 											<option value="mediumInteger">MEDIUMINT</option>
@@ -149,12 +149,16 @@
 									</td>
 									<td>
 										<input type="checkbox" name="formFillable[]" 
-										v-on:change="addFormfield(fields[index])"
+										v-on:change="addFormfield(index)"
 										:value="fields[index]">
 									</td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="form-group">
+							<input type="checkbox" name="increments" id="increments" value="1">
+							<label for="increments">Include Increments</label>
+						</div>
 						<div class="form-group">
 							<input type="checkbox" name="timestamps" id="timestamps" value="1">
 							<label for="timestamps">Include Timestamps</label>
@@ -258,7 +262,7 @@
 							<tbody>
 								<tr v-for="field, index in formFields">
 									<td>
-										@{{ field }}
+										@{{ fields[field] }}
 										<input type="hidden" name="formFields[]" :value="field">
 									</td>
 									<td>
