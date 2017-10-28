@@ -141,7 +141,7 @@
 									</td>
 									<td>
 										<input type="checkbox" 
-										v-on:change="addRelationshipfield(fields[index])"
+										v-on:change="addRelationshipfield(index)"
 										:value="fields[index]">
 									</td>
 									<td>
@@ -186,7 +186,7 @@
 									<td>
 										<input type="text" 
 										name="local_key[]" 
-										class="form-control" :value="field" readonly>
+										class="form-control" :value="fields[field]" readonly>
 									</td>
 									<td>
 										<select name="model[]" class="form-control">

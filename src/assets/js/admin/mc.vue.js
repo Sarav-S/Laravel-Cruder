@@ -37,8 +37,17 @@ var app = new Vue({
         fieldName: function (fieldName, field) {
             return field + "[" + fieldName + "]";
         },
-        addRelationshipfield: function (field) {
-            this.relationshipsFields.push(field);
+        addRelationshipfield: function (fieldIndex) {
+            var fields = this.relationshipsFields;
+            var index = fields.indexOf(fieldIndex);
+
+            if (index > -1) {
+                fields.splice(index, 1);
+            } else {
+                fields.push(fieldIndex);
+            }
+
+            this.relationshipsFields = fields;
         },
         addFormfield: function (fieldIndex) {
             var fields = this.formFields;
@@ -51,6 +60,6 @@ var app = new Vue({
             }
 
             this.formFields = fields;
-        },
+        }
     }
 });
