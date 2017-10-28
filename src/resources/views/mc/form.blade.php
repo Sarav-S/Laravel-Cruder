@@ -25,11 +25,7 @@
 					{!! session('success') !!}
 				</p>
 			@endif
-			<div class="overflow-hidden  mb-20">
-				<a href="{{ route('mc.initialize') }}" class="btn btn-success pull-right">
-					Initialize Core Modules
-				</a>
-			</div>
+			
 			<div class="module-wrapper">
 				<div class="form-group">
 					<label for="module_name">Module Name</label>
