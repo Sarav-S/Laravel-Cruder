@@ -6,6 +6,7 @@ use Illuminate\Support\Composer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Sarav\Command\InitializeCruder;
 
 class CruderServiceProvider extends ServiceProvider
 {
@@ -19,8 +20,7 @@ class CruderServiceProvider extends ServiceProvider
     {
         $this->setupConfig();
         $this->setupAssets();
-        $this->removeBoilerPlateMigrationsFiles();
-        $this->initializeCoreModules();
+        $this->registerConsoleCommand();
     }
 
     /**
@@ -58,62 +58,13 @@ class CruderServiceProvider extends ServiceProvider
         $this->publishes([$js => public_path('js/admin/mc.vue.js')]);
     }
 
-    public function removeBoilerPlateMigrationsFiles()
+
+    private function registerConsoleCommand()
     {
-        \File::cleanDirectory(database_path('migrations'));
-    }
-
-    public function initializeCoreModules()
-    {
-        $sourceFolder      = __DIR__.'/../code';
-        $destinationFolder = base_path().'/code';
-
-        \File::copyDirectory($sourceFolder, $destinationFolder);
-
-        $this->setupComposerNamespace();
-    }
-
-    public function setupComposerNamespace()
-    {
-        if (! file_exists(base_path('composer.json'))) {
-            return;
-        }
-
-        $composer = json_decode(file_get_contents(base_path('composer.json')), true);
-
-        $autoload = $composer['autoload'];
-
-        if (!array_key_exists("Code\\", $autoload['psr-4'])) {
-            $autoload['psr-4']["Code\\"] = "code/";
-        }
-
-        if (!isset($autoload['files'])) {
-            $autoload['files'] = [];
-        }
-
-        if (!in_array("code/Core/Helper/helper.php", $autoload['files'])) {
-            $autoload['files'][] = "code/Core/Helper/helper.php";
-        }
-
-        $composer['autoload'] = $autoload;
-
-        $postAutoloadDump = $composer['scripts'];
-
-        $composer['scripts'] = [];
-
-        file_put_contents(
-            base_path('composer.json'),
-            json_encode($composer, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
-        );
-
-        $composerInstance = new Composer(new Filesystem);
-        $composerInstance->dumpAutoloads();
-
-        $composer['scripts'] = $postAutoloadDump;
-
-        file_put_contents(
-            base_path('composer.json'),
-            json_encode($composer, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
-        );
+        $this->app->singleton('command.initialize.cruder', function () {
+            return new InitializeCruder();
+        });
+        
+        $this->commands(['command.initialize.cruder']);
     }
 }
