@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        if (!is_null(config('admin.mc_url'))) {
+        if (!is_null(config('admin.mc_url')) && config('admin.mc_status')) {
             $this->mapRoutes();
         }
     }
