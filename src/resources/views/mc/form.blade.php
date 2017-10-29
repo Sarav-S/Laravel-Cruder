@@ -86,6 +86,10 @@
 								Add Row
 							</a>
 						</div>
+						<div class="form-group">
+							<input type="checkbox" name="increments" id="increments" value="1" checked="checked">
+							<label for="increments">Include Increments</label>
+						</div>
 						<table class="table table-bordered add-pad">
 							<thead>
 								<tr>
@@ -155,10 +159,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<div class="form-group">
-							<input type="checkbox" name="increments" id="increments" value="1">
-							<label for="increments">Include Increments</label>
-						</div>
+						
 						<div class="form-group">
 							<input type="checkbox" name="timestamps" id="timestamps" value="1">
 							<label for="timestamps">Include Timestamps</label>

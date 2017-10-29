@@ -25,6 +25,7 @@ return [
 
     /**
      * Setting it to true, enables the mc creation modules routes.
+     * By default, its enabled.
      */
-    'mc_status' => false,
+    'mc_status' => true,
 ];
