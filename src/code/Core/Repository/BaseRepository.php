@@ -147,13 +147,16 @@ abstract class BaseRepository extends Repository
         $id = $record->id;
 
         try {
+            DB::beginTransaction();
             if ($record->delete()) {
                 $this->afterDelete($id);
+                DB::commit();
                 success(str_singular($this->module()).' deleted successfully.');
             } else {
                 error('Unable to delete '.str_singular($this->module()).'. Please try again');
             }
         } catch (\Exception $e) {
+            DB::rollBack();
             error("Sorry. Something went wrong. Please check your log file");
         }
 
