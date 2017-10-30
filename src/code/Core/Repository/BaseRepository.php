@@ -2,6 +2,7 @@
 
 namespace Code\Core\Repository;
 
+use DB;
 use Bosnadev\Repositories\Eloquent\Repository;
 use Illuminate\Container\Container as App;
 use Illuminate\Database\Eloquent\Model;
@@ -98,15 +99,23 @@ abstract class BaseRepository extends Repository
         $record = $this->beforeSave($record);
 
         try {
+            DB::beginTransaction();
+
             if ($record->save()) {
                 $this->afterSave($record);
                 $record->save();
+                DB::commit();
                 success(str_singular($this->module()).' saved successfully.');
             } else {
                 error('Unable to save '.str_singular($this->module()).'. Please try again');
             }
+        } catch (\Throwable $e) {
+            logger($e);
+            DB::rollBack();
+            error('Sorry. Something went wrong. Please check your log file');
         } catch (\Exception $e) {
             logger($e);
+            DB::rollBack();
             error('Sorry. Something went wrong. Please check your log file');
         }
 
@@ -147,7 +156,6 @@ abstract class BaseRepository extends Repository
         } catch (\Exception $e) {
             error("Sorry. Something went wrong. Please check your log file");
         }
-
 
         return redirect($this->getFallBack());
     }
