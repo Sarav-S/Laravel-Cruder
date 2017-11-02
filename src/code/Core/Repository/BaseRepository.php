@@ -13,6 +13,13 @@ abstract class BaseRepository extends Repository
 {
 
     /**
+     * Holds the Model instance
+     *
+     * @var Illuminate\Database\Eloquent\Model
+     */
+    protected $record;
+
+    /**
      * @param App $app
      * @param Collection $collection
      * @throws \Bosnadev\Repositories\Exceptions\RepositoryException
@@ -90,20 +97,20 @@ abstract class BaseRepository extends Repository
      */
     public function save($id = null)
     {
-        $record = $this->findOrCreate($id);
+        $this->record = $this->findOrCreate($id);
 
-        if (!$record) {
+        if (!$this->record) {
             return $this->returnNotFound();
         }
 
-        $record = $this->beforeSave($record);
+        $this->record = $this->beforeSave($this->record);
 
         try {
             DB::beginTransaction();
 
-            if ($record->save()) {
-                $this->afterSave($record);
-                $record->save();
+            if ($this->record->save()) {
+                $this->afterSave($this->record);
+                $this->record->save();
                 DB::commit();
                 success(str_singular($this->module()).' saved successfully.');
             } else {
