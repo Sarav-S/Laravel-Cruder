@@ -264,7 +264,7 @@
 								<tr v-for="field, index in formFields">
 									<td>
 										@{{ fields[field] }}
-										<input type="hidden" name="formFields[]" :value="field">
+										<input type="hidden" name="formFields[]" v-bind:value="fields[field]">
 									</td>
 									<td>
 										<input type="text" name="display_name[]" class="form-control">
@@ -282,10 +282,10 @@
 										</select>
 									</td>
 									<td>
-										<input type="checkbox" name="requiredField[]" :value="field">
+										<input type="checkbox" name="requiredField[]" v-bind:value="fields[field]">
 									</td>
 									<td>
-										<input type="checkbox" name="hasFieldRelationship[]" :value="field">
+										<input type="checkbox" name="hasFieldRelationship[]" v-bind:value="fields[field]">
 									</td>
 									<td>
 										<select name="modelFields[]" class="form-control">

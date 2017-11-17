@@ -55,6 +55,11 @@
 			</tbody>
 		</table>
 	</div>
+	@if (method_exists($records, "links"))
+	<div class="text-center">
+		{!! $records->links() !!}
+	</div>
+	@endif
 	@else
 		<p class="alert alert-info text-center">No records found</p>
 	@endif

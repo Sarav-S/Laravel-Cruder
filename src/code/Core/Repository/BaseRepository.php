@@ -245,4 +245,15 @@ abstract class BaseRepository extends Repository
 
         return redirect($this->getFallBack());
     }
+
+    /**
+     * @param int $perPage
+     * @param array $columns
+     * @return mixed
+     */
+    public function paginate($perPage = 15, $columns = array('*'))
+    {
+        $this->applyCriteria();
+        return $this->model->latest($this->model->getKeyName())->paginate($perPage, $columns);
+    }
 }

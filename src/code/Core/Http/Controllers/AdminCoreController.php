@@ -30,7 +30,7 @@ abstract class AdminCoreController extends Controller
 
     public function index()
     {
-        $records = $this->repo->latest();
+        $records = $this->repo->paginate();
 
         $module = $this->module;
 
